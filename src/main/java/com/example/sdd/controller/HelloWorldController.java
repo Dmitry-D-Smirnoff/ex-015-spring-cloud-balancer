@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+//@RefreshScope
 @RestController
 public class HelloWorldController {
 
@@ -20,7 +21,12 @@ public class HelloWorldController {
 
     @GetMapping("/hello-worlds/{name}")
     public String getHelloWorld(@PathVariable String name) {
-        return "Hello from Balancer. My message to You is " + currentGreeting + ". Embedded message is^ "
-                + messageClient.getRestTemplateGreeting(name);
+
+        // TODO: You may return CALL: getRestTemplateGreeting(name);
+        // TODO: for this You MUST!!! restore @LoadBalanced annotation at RestTemplateConfig
+        // TODO: If You getDiscoveryClientGreeting(name) - You MUST remove this annotation!!
+        return "Hello from Balancer. My message to You is " + currentGreeting + ". Embedded message is: "
+                + messageClient.getDiscoveryClientGreeting(name);
+//                + messageClient.getRestTemplateGreeting(name);
     }
 }
